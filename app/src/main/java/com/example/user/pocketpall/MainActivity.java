@@ -1,6 +1,7 @@
 package com.example.user.pocketpall;
 
 import android.content.res.Configuration;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.user.pocketpall.Menu.MenuAdapter;
+import com.example.user.pocketpall.Menu.MenuItom;
+
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
@@ -20,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private ArrayList<MenuItom> menuItems;
+    private MenuAdapter menuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
+        menuItems = new ArrayList<>();
+        menuItems.add(new MenuItom("FIRST", R.drawable.home));
+        // Find People
+        menuItems.add(new MenuItom("SECOND", R.drawable.home));
+        // Photos
+        menuAdapter = new MenuAdapter(getApplicationContext(),
+                menuItems);
+        mDrawerList.setAdapter(menuAdapter);
     }
 
     private void setupDrawer() {
