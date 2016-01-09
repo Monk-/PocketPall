@@ -1,6 +1,9 @@
 package com.example.user.pocketpall;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -15,10 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.devspark.appmsg.AppMsg;
+import com.example.user.pocketpall.Database.DatabaseHandler;
+import com.example.user.pocketpall.Dialogs.AddExpenseDialFrag;
+import com.example.user.pocketpall.Dialogs.AddIncomeDialFrag;
+import com.example.user.pocketpall.Dialogs.Command;
+import com.example.user.pocketpall.Dialogs.DeleteExpenseDialFrag;
+import com.example.user.pocketpall.Dialogs.DeleteIncomeDialFrag;
+import com.example.user.pocketpall.Dialogs.Invoker;
 import com.example.user.pocketpall.Fragments.PagerAdapter;
 import com.example.user.pocketpall.Menu.MenuAdapter;
 import com.example.user.pocketpall.Menu.MenuItom;
@@ -28,6 +39,7 @@ import com.example.user.pocketpall.RestoreAndBackup.ImpoStrategy;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,13 +53,27 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
 
+    public static  String date =""; //date picker result
+
+    public static DatabaseHandler db;
+
     private ImpoExpoContext ctx; // import and export
+
+
+    public static Invoker invoker;
+    public static Command addIncomeDialFrag;
+    public static Command addExpenseDialFrag;
+    public static Command deleteIncomeDialFrag;
+    public static Command deleteExpenseDialFrag;
+    public static Command decor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initVars();
+        initBase();
+        setDialogs();
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -71,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position)
-                {
+                switch (position) {
                     case 0:
+                        invoker.setCommand(addIncomeDialFrag);
+                        invoker.show();
                         break;
                     case 1:
                         break;
@@ -95,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
         setupDrawer();
+    }
+
+    private void initBase()
+    {
+        db = new DatabaseHandler(getApplicationContext());
     }
 
     private void initVars()
@@ -123,6 +155,16 @@ public class MainActivity extends AppCompatActivity {
         return tabLayout;
     }
 
+    private void setDialogs()
+    {
+        invoker = new Invoker();
+        invoker.setFg(getFragmentManager());
+        addIncomeDialFrag = new AddIncomeDialFrag();
+        //addExpenseDialFrag = new AddExpenseDialFrag();
+        //deleteIncomeDialFrag = new DeleteIncomeDialFrag();
+        //deleteExpenseDialFrag = new DeleteExpenseDialFrag();
+
+    }
 
     private void addDrawerItems() {
         menuItems = new ArrayList<>();
@@ -195,6 +237,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            date = Integer.toString(day) + ":"+
+                    Integer.toString(month) + ":" +
+                    Integer.toString(year);
+        }
+
+
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "timePicker");
     }
 
 }
