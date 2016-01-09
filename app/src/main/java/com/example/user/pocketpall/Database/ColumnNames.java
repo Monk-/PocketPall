@@ -14,15 +14,17 @@ public class ColumnNames {
         public static final String COLUMN_INCOME_TITLE = "title";
         public static final String COLUMN_INCOME_COMMENT = "comment";
         public static final String COLUMN_INCOME_AMOUNT = "amount";
+        public static final String COLUMN_INCOME_CATEGORY = "category";
         public static final String COLUMN_INCOME_DATE = "date";
     }
 
-    public static abstract class Expence implements BaseColumns
+    public static abstract class Expense implements BaseColumns
     {
         public static final String TABLE_NAME = "expence";
-        public static final String COLUMN_EXPENCE_TITLE = "title";
-        public static final String COLUMN_EXPENCE_COMMENT = "comment";
-        public static final String COLUMN_EXPENCE_AMOUNT = "amount";
-        public static final String COLUMN_EXPENCE_DATE = "date";
+        public static final String COLUMN_EXPENSE_TITLE = "title";
+        public static final String COLUMN_EXPENSE_COMMENT = "comment";
+        public static final String COLUMN_EXPENSE_AMOUNT = "amount";
+        public static final String COLUMN_EXPENSE_CATEGORY = "category";
+        public static final String COLUMN_EXPENSE_DATE = "date";
     }
 }

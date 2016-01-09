@@ -1,12 +1,10 @@
 package com.example.user.pocketpall;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,18 +15,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.devspark.appmsg.AppMsg;
-import com.example.user.pocketpall.Database.DatabaseHandler;
+import com.example.user.pocketpall.Database.ExpenseTemplate;
+import com.example.user.pocketpall.Database.IncomeTemplate;
+import com.example.user.pocketpall.Database.Template;
 import com.example.user.pocketpall.Dialogs.AddExpenseDialFrag;
 import com.example.user.pocketpall.Dialogs.AddIncomeDialFrag;
 import com.example.user.pocketpall.Dialogs.Command;
-import com.example.user.pocketpall.Dialogs.DeleteExpenseDialFrag;
-import com.example.user.pocketpall.Dialogs.DeleteIncomeDialFrag;
 import com.example.user.pocketpall.Dialogs.Invoker;
 import com.example.user.pocketpall.Fragments.PagerAdapter;
 import com.example.user.pocketpall.Menu.MenuAdapter;
@@ -55,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static  String date =""; //date picker result
 
-    public static DatabaseHandler db;
+    public static Template incDB;
+    public static Template expDB;
 
     private ImpoExpoContext ctx; // import and export
 
@@ -128,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBase()
     {
-        db = new DatabaseHandler(getApplicationContext());
+        incDB = new IncomeTemplate(getApplicationContext());
+        expDB = new ExpenseTemplate(getApplicationContext());
     }
 
     private void initVars()
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
     private void addDrawerItems() {
         menuItems = new ArrayList<>();
         menuItems.add(new MenuItom("Add Income", R.drawable.income));
-        menuItems.add(new MenuItom("Add Expence", R.drawable.expence));
+        menuItems.add(new MenuItom("Add Expense", R.drawable.expence));
         menuItems.add(new MenuItom("Create backup", R.drawable.save));
         menuItems.add(new MenuItom("Restore backup", R.drawable.restore));
         menuAdapter = new MenuAdapter(getApplicationContext(),
