@@ -1,5 +1,6 @@
 package com.example.user.pocketpall;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -17,9 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.devspark.appmsg.AppMsg;
 import com.example.user.pocketpall.Fragments.PagerAdapter;
 import com.example.user.pocketpall.Menu.MenuAdapter;
 import com.example.user.pocketpall.Menu.MenuItom;
+import com.example.user.pocketpall.RestoreAndBackup.ExpoStrategy;
+import com.example.user.pocketpall.RestoreAndBackup.ImpoExpoContext;
+import com.example.user.pocketpall.RestoreAndBackup.ImpoStrategy;
 
 
 import java.util.ArrayList;
@@ -33,17 +38,16 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<MenuItom> menuItems;
     private MenuAdapter menuAdapter;
 
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+
+    private ImpoExpoContext ctx; // import and export
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        initVars();
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -56,24 +60,34 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        mDrawerList = (ListView)findViewById(R.id.navList);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
+
         addDrawerItems();
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                switch (position)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        ctx.setImpoExpoStrategy(new ExpoStrategy());
+                        ctx.doIt();
+                        AppMsg.makeText(MainActivity.this, "Backup created", new AppMsg.Style(2000, R.color.green)).show();
+                        break;
+                    case 3:
+                        ctx.setImpoExpoStrategy(new ImpoStrategy());
+                        ctx.doIt();
+                        AppMsg.makeText(MainActivity.this, "Data restored", new AppMsg.Style(2000, R.color.green)).show();
+                        break;
+                }
             }
         });
         if (getSupportActionBar()!=null) {
@@ -83,13 +97,39 @@ public class MainActivity extends AppCompatActivity {
         setupDrawer();
     }
 
+    private void initVars()
+    {
+        ctx = new ImpoExpoContext();
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        settingUpToolbar();
+        tabLayout = initTabs(); // initialising tabs
+    }
+
+    private void settingUpToolbar()
+    {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    private TabLayout initTabs()
+    {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        return tabLayout;
+    }
+
 
     private void addDrawerItems() {
         menuItems = new ArrayList<>();
-        menuItems.add(new MenuItom("FIRST", R.drawable.home));
-        // Find People
-        menuItems.add(new MenuItom("SECOND", R.drawable.home));
-        // Photos
+        menuItems.add(new MenuItom("Add Income", R.drawable.income));
+        menuItems.add(new MenuItom("Add Expence", R.drawable.expence));
+        menuItems.add(new MenuItom("Create backup", R.drawable.save));
+        menuItems.add(new MenuItom("Restore backup", R.drawable.restore));
         menuAdapter = new MenuAdapter(getApplicationContext(),
                 menuItems);
         mDrawerList.setAdapter(menuAdapter);
