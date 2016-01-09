@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.R;
@@ -36,7 +37,12 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
-            dialogView = inflater.inflate(R.layout.dial_frag_add_income,null);
+            dialogView = inflater.inflate(R.layout.dial_frag_add_income, null);
+            Spinner dropdown = (Spinner)dialogView.findViewById(R.id.categorySpinner);
+            String[] items = new String[]{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_dropdown_item, items);
+            dropdown.setAdapter(adapter);
          /*   List <User> users = db.getAllUsers();
             names = new ArrayList<String>();
             for (int i=0;i<users.size();i++)

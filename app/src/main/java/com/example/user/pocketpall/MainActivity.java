@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                         invoker.show();
                         break;
                     case 1:
+                        invoker.setCommand(addExpenseDialFrag);
+                        invoker.show();
                         break;
                     case 2:
                         ctx.setImpoExpoStrategy(new ExpoStrategy());
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         invoker = new Invoker();
         invoker.setFg(getFragmentManager());
         addIncomeDialFrag = new AddIncomeDialFrag();
-        //addExpenseDialFrag = new AddExpenseDialFrag();
+        addExpenseDialFrag = new AddExpenseDialFrag();
         //deleteIncomeDialFrag = new DeleteIncomeDialFrag();
         //deleteExpenseDialFrag = new DeleteExpenseDialFrag();
 

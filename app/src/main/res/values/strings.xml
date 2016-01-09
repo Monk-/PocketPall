@@ -12,4 +12,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Name">Name</string>
     <string name="Owner">Owner</string>
+    <string name="Category">Category</string>
+    <string name="add_income">Add Income</string>
+    <string name="Title">Title</string>
+    <string name="Comment">Comment</string>
+    <string name="Ammount">Amount</string>
+    <string name="pickDate">Pick date</string>
+    <string name="add_expense">Add Expense</string>
 </resources>
