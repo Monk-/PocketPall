@@ -15,12 +15,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.user.pocketpall.Classes.Categories;
+import com.example.user.pocketpall.Classes.Expense;
+import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.user.pocketpall.MainActivity.date;
+import static com.example.user.pocketpall.MainActivity.expDB;
 
 
 public class AddExpenseDialFrag extends DialogFragment implements Command {
@@ -38,8 +43,8 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         dialogView = inflater.inflate(R.layout.dial_frag_add_expense, null);
-        Spinner dropdown = (Spinner)dialogView.findViewById(R.id.categorySpinner);
-        String[] items = new String[]{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+        Spinner dropdown = (Spinner)dialogView.findViewById(R.id.ExcategorySpinner);
+        String[] items = new String[]{"Car", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -63,43 +68,30 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
                     public void onClick(DialogInterface dialog, int id)
                     {
 
-                /*            EditText user1 = (EditText) dialogView.findViewById(R.id.autoCompleteTextView);
-                            EditText name1 = (EditText) dialogView.findViewById(R.id.name);
-                            EditText mode1 = (EditText) dialogView.findViewById(R.id.mode);
-                            EditText income1 = (EditText) dialogView.findViewById(R.id.size);
-                            String owner = user1.getText().toString();
-                            String name = name1.getText().toString();
-                            int mode = Integer.parseInt(mode1.getText().toString());
-                            int income = Integer.parseInt(income1.getText().toString());
-                            boolean p = false;
-                            for (int i = 0; i < names.size(); i++)
-                            {
-                                String h = names.get(i).toString();
-                                if (owner.equals(h))
-                                {
-                                    p = true;
-                                }
-                            }
-                            if (owner.equals("") || name.equals("") || mode1.getText().toString().equals("") || income1.getText().toString().equals("") || date.equals(""))
-                            {
-                                p = false;
-                            }
-                            if (p == true)
-                            {
-                                incTemplate.addToDb(new Income(owner, name, mode, income, date));
-                                controllerInc.setList("Income",getActivity());
-                                // db.addIncome(new Income(owner, name, mode, income, date));
-                                if (preferences.getString("Activity", "").equals("2"))
-                                {
-                                    checkDisOutNigga();
-                                }
-                                controllerInc.UpdateAdapterIncome(sumin,listview_in);
-                                Toast.makeText(MyApplication.getAppContext(), "Income successfully added.", Toast.LENGTH_LONG).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(MyApplication.getAppContext(), "There is no user with this name or there is other problem with data", Toast.LENGTH_LONG).show();
-                            }*/
+                        EditText title1 = (EditText) dialogView.findViewById(R.id.Extitle);
+                        EditText comment1 = (EditText) dialogView.findViewById(R.id.Excomment);
+                        EditText amount1 = (EditText) dialogView.findViewById(R.id.Examount);
+                        Spinner category1 = (Spinner) dialogView.findViewById(R.id.ExcategorySpinner);
+                        String title = title1.getText().toString();
+                        String comment = comment1.getText().toString();
+                        Double amount = Double.parseDouble(!amount1.getText().toString().equals("") ? amount1.getText().toString() : "-1.0");
+                        Integer category = Categories.getInt(category1.getSelectedItem().toString());
+                        boolean p = true;
+                        if (title.equals("") || comment.equals("") || amount == -1 || category == -1 || date.equals("")) {
+                            p = false;
+                        }
+                        if (p) {
+                            expDB.addToDb(new Expense(title, comment, amount, category, date));
+                            //controllerInc.setList("Income", getActivity());
+                            // db.addIncome(new Income(owner, name, mode, income, date));
+                            //if (preferences.getString("Activity", "").equals("2")) {
+                            //    checkDisOutNigga();
+                            //}
+                            //controllerInc.UpdateAdapterIncome(sumin, listview_in);
+                            //Toast.makeText(ContextHelperClass.getAppContext(), "Income successfully added.", Toast.LENGTH_LONG).show();
+                        } else {
+                            //Toast.makeText(ContextHelperClass.getAppContext(), "There is no user with this name or there is other problem with data", Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
