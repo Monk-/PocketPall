@@ -56,9 +56,13 @@ public class ExpenseTemplate extends Template{
         {
             do
             {
-                Expense expense = new Expense(cursor.getString(0), cursor.getString(1), cursor.getString(5),
-                        Double.parseDouble(cursor.getString(3)), Integer.parseInt(cursor.getString(4)));
-                list.add(expense);
+                try {
+                    Expense expense = new Expense(cursor.getString(0), cursor.getString(1),
+                            Double.parseDouble(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+                    list.add(expense);
+                } catch (NumberFormatException ex) {
+                    // handle exception
+                }
             }
             while (cursor.moveToNext());
         }

@@ -2,33 +2,7 @@ package com.example.user.pocketpall.Classes;
 
 import java.util.Date;
 
-enum Categories{
 
-    Car(0, "Car"),
-    Clothing(1, "Clothing"),
-    Electronics(2, "Electronics"),
-    Expenses(3, "Expenses"),
-    Home(4, "Home"),
-    Income(5, "Income"),
-    Work(6, "Work"),
-    Education(7, "Education"),
-    Sports(8, "Sports");
-
-
-    Categories(int code, String title){
-        this.code=code;
-        this.title = title;
-    }
-    protected int code;
-    protected String title;
-
-    public int getCode() {
-        return this.code;
-    }
-    public String getString(Categories d){
-        return d.title;
-    }
-}
 
 
 public abstract class ExIn {
@@ -36,8 +10,9 @@ public abstract class ExIn {
     String comment;
     String date;
     Double amount;
+    Integer category;
 
-    public ExIn(String title, String comment, String date, Double amount, Integer category) {
+    public ExIn(String title, String comment, Double amount, Integer category, String date) {
         this.title = title;
         this.comment = comment;
         this.date = date;
@@ -52,10 +27,6 @@ public abstract class ExIn {
     public void setCategory(Integer category) {
         this.category = category;
     }
-
-    Integer category;
-    //TODO category
-
 
     public String getTitle() {
         return title;

@@ -51,14 +51,16 @@ public class IncomeTemplate extends Template {
 
     @Override
     public List getAllData(Cursor cursor, SQLiteDatabase db) {
-        List <Income> list = new ArrayList<>();
-        if (cursor.moveToFirst())
-        {
-            do
-            {
-                Income income = new Income(cursor.getString(0), cursor.getString(1), cursor.getString(5),
-                        Double.parseDouble(cursor.getString(3)), Integer.parseInt(cursor.getString(4)));
-                list.add(income);
+        List<Income> list = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Income income = new Income(cursor.getString(0), cursor.getString(1),
+                            Double.parseDouble(cursor.getString(3)), Integer.parseInt(cursor.getString(4)), cursor.getString(5));
+                    list.add(income);
+                } catch (NumberFormatException ex) {
+                    // handle exception
+                }
             }
             while (cursor.moveToNext());
         }
@@ -70,6 +72,6 @@ public class IncomeTemplate extends Template {
     public void delete(SQLiteDatabase db, ExIn come) {
         db.delete(ColumnNames.Income.TABLE_NAME, //table name
                 " title = ? and date = ?",  // selections
-                new String[] {come.getTitle(), come.getDate() }); //selections args
+                new String[]{come.getTitle(), come.getDate()}); //selections args
     }
 }

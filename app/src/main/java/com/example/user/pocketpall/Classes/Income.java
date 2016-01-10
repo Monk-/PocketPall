@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Income extends ExIn {
 
-    public Income(String title, String comment, String date, Double amount, Integer category) {
-        super(title, comment, date, amount, category);
+    public Income(String title, String comment, Double amount, Integer category, String date) {
+        super(title, comment, amount, category, date);
     }
 }

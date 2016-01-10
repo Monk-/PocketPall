@@ -21,7 +21,7 @@ import com.example.user.pocketpall.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.user.pocketpall.MainActivity.db;
+
 
 public class AddExpenseDialFrag extends DialogFragment implements Command {
     public View dialogView;

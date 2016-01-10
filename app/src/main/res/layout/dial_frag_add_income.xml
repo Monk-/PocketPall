@@ -33,7 +33,7 @@
             android:text="@string/Title"/>
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView"
+            android:id="@+id/Intitle"
             android:layout_width="match_parent"
             android:textColor="#2f4f4f"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:text="@string/Comment"/>
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/Incomment"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,8 +68,8 @@
             android:text="@string/Ammount"/>
 
         <EditText
-            android:id="@+id/mode"
-            android:inputType="number"
+            android:id="@+id/Inamount"
+            android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
@@ -93,7 +93,7 @@
             android:paddingStart="5dp"
             android:fontFamily="sans-serif"
             style="@style/Widget.AppCompat.Spinner.Underlined"
-            android:id="@+id/categorySpinner"
+            android:id="@+id/IncategorySpinner"
             android:backgroundTint="@color/bluee"
             android:paddingLeft="5dp"/>
 
