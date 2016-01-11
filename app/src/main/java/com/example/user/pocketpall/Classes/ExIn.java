@@ -45,7 +45,12 @@ public abstract class ExIn {
     }
 
     public String getDate() {
-        return date.toString();
+        return date;
+    }
+
+    public String getMonth()
+    {
+        return date.split(":")[1];
     }
 
     public void setDate(String date) {

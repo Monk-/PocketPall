@@ -148,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout initTabs()
     {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Overview"));
+        tabLayout.addTab(tabLayout.newTab().setText("Diagram"));
+        tabLayout.addTab(tabLayout.newTab().setText("Statistics"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         return tabLayout;
     }
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
         menuItems = new ArrayList<>();
-        menuItems.add(new MenuItom("Add Income", R.drawable.income));
+        menuItems.add(new MenuItom("Add Income", R.drawable.income1));
         menuItems.add(new MenuItom("Add Expense", R.drawable.expence));
         menuItems.add(new MenuItom("Create backup", R.drawable.save));
         menuItems.add(new MenuItom("Restore backup", R.drawable.restore));

@@ -44,7 +44,7 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
         // Pass null as the parent view because its going in the dialog layout
         dialogView = inflater.inflate(R.layout.dial_frag_add_income, null);
         Spinner dropdown = (Spinner) dialogView.findViewById(R.id.IncategorySpinner);
-        String[] items = new String[]{"Car", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+        String[] items = new String[]{"Car", "Clothing", "Electronics", "Expenses", "Home", "Income", "Work", "Education", "Sports"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);

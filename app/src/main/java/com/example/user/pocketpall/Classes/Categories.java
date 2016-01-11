@@ -43,6 +43,33 @@ public enum Categories {
         }
     }
 
+    public static String getStr(int pos)
+    {
+        switch(pos)
+        {
+            case 0:
+                return "Car";
+            case 1:
+                return "Clothing";
+            case 2:
+                return "Electronics";
+            case 3:
+                return "Expenses";
+            case 4:
+                return "Home";
+            case 5:
+                return "Income";
+            case 6:
+                return "Work";
+            case 7:
+                return "Education";
+            case 8:
+                return "Sports";
+            default:
+                return "Income";
+        }
+    }
+
     Categories(int code, String title) {
         this.code = code;
         this.title = title;

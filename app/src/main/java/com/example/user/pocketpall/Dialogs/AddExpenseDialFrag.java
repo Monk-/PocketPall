@@ -33,6 +33,12 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
     public AutoCompleteTextView actv;
     public List<String> names;
 
+    EditText title1;
+    EditText comment1;
+    EditText amount1;
+    Spinner category1;
+
+
     public AddExpenseDialFrag()
     {}
 
@@ -44,7 +50,7 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
         // Pass null as the parent view because its going in the dialog layout
         dialogView = inflater.inflate(R.layout.dial_frag_add_expense, null);
         Spinner dropdown = (Spinner)dialogView.findViewById(R.id.ExcategorySpinner);
-        String[] items = new String[]{"Car", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+        String[] items = new String[]{"Car", "Clothing", "Electronics", "Expenses", "Home", "Income", "Work", "Education", "Sports"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
@@ -67,20 +73,16 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-
-                        EditText title1 = (EditText) dialogView.findViewById(R.id.Extitle);
-                        EditText comment1 = (EditText) dialogView.findViewById(R.id.Excomment);
-                        EditText amount1 = (EditText) dialogView.findViewById(R.id.Examount);
-                        Spinner category1 = (Spinner) dialogView.findViewById(R.id.ExcategorySpinner);
+                        initLayout();
                         String title = title1.getText().toString();
                         String comment = comment1.getText().toString();
                         Double amount = Double.parseDouble(!amount1.getText().toString().equals("") ? amount1.getText().toString() : "-1.0");
                         Integer category = Categories.getInt(category1.getSelectedItem().toString());
-                        boolean p = true;
+                        boolean okey = true;
                         if (title.equals("") || comment.equals("") || amount == -1 || category == -1 || date.equals("")) {
-                            p = false;
+                            okey = false;
                         }
-                        if (p) {
+                        if (okey) {
                             expDB.addToDb(new Expense(title, comment, amount, category, date));
                             //controllerInc.setList("Income", getActivity());
                             // db.addIncome(new Income(owner, name, mode, income, date));
@@ -104,6 +106,14 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
         Dialog  dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         return dialog;
+    }
+
+    private void initLayout()
+    {
+        title1 = (EditText) dialogView.findViewById(R.id.Extitle);
+        comment1 = (EditText) dialogView.findViewById(R.id.Excomment);
+        amount1 = (EditText) dialogView.findViewById(R.id.Examount);
+        category1 = (Spinner) dialogView.findViewById(R.id.ExcategorySpinner);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class ExpenseTemplate extends Template{
             {
                 try {
                     Expense expense = new Expense(cursor.getString(0), cursor.getString(1),
-                            Double.parseDouble(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),cursor.getString(5));
+                            Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),cursor.getString(4));
                     list.add(expense);
                 } catch (NumberFormatException ex) {
                     // handle exception

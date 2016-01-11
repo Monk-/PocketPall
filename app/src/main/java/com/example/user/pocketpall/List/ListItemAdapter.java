@@ -6,21 +6,33 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
+import com.example.user.pocketpall.Classes.Categories;
+import com.example.user.pocketpall.Classes.ExIn;
+import com.example.user.pocketpall.Classes.Expense;
+import com.example.user.pocketpall.Classes.Income;
+import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import static  com.example.user.pocketpall.Fragments.Fragment1.*;
 
 public class ListItemAdapter implements ListAdapter {
-    private ArrayList<Object> personArray;
+    private List<Object> personArray;
     private LayoutInflater inflater;
-    private static final int TYPE_PERSON = 0;
-    private static final int TYPE_DIVIDER = 1;
+    private static final int TYPE_INCOME = 0;
+    private static final int TYPE_EXPENSE = 1;
+    private static final int TYPE_DIVIDER = 2;
+    private static Fragment1 f = null ;
 
-    public ListItemAdapter(Fragment1 fragment1, ArrayList<Object> people) {
+    public ListItemAdapter(Fragment1 fragment1, List<Object> people) {
+        this.f = fragment1;
         this.personArray = people;
         this.inflater = (LayoutInflater)fragment1.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -32,7 +44,7 @@ public class ListItemAdapter implements ListAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        return (getItemViewType(position) == TYPE_PERSON);
+        return (getItemViewType(position) == TYPE_INCOME || getItemViewType(position) == TYPE_EXPENSE);
     }
 
     @Override
@@ -70,7 +82,10 @@ public class ListItemAdapter implements ListAdapter {
         int type = getItemViewType(position);
         if (convertView == null) {
             switch (type) {
-                case TYPE_PERSON:
+                case TYPE_INCOME:
+                    convertView = inflater.inflate(R.layout.row_item, parent, false);
+                    break;
+                case TYPE_EXPENSE:
                     convertView = inflater.inflate(R.layout.row_item, parent, false);
                     break;
                 case TYPE_DIVIDER:
@@ -80,7 +95,39 @@ public class ListItemAdapter implements ListAdapter {
         }
 
         switch (type) {
-            case TYPE_PERSON:
+            case TYPE_INCOME:
+                ExIn income = (ExIn)getItem(position);
+                TextView title = (TextView)convertView.findViewById(R.id.InTitleLabel);
+                title.setText(income.getTitle());
+                TextView amount = (TextView)convertView.findViewById(R.id.InAmountLabel);
+                amount.setText(income.getAmount().toString());
+                TextView date = (TextView)convertView.findViewById(R.id.Indate);
+                String [] s = income.getDate().split(":");
+                date.setText(s[0] + " " +getMonth(Integer.parseInt(s[1])) + " "+ s[2]);
+                ImageView category = (ImageView)convertView.findViewById(R.id.IncategoryImage);
+                category.setImageResource(f.getActivity().getResources().getIdentifier(Categories.getStr(income.getCategory()).toLowerCase(), "drawable", f.getActivity().getPackageName()));
+                ImageView greenbar = (ImageView)convertView.findViewById(R.id.bar);
+                greenbar.setImageResource(f.getActivity().getResources().getIdentifier("greenbar", "drawable", f.getActivity().getPackageName()));
+              /*  Person person = (Person)getItem(position);
+                TextView name = (TextView)convertView.findViewById(R.id.nameLabel);
+                TextView address = (TextView)convertView.findViewById(R.id.addressLabel);
+                name.setText(person.getName());
+                address.setText(person.getAddress());*/
+                break;
+            case TYPE_EXPENSE:
+                ExIn expence = (ExIn)getItem(position);
+                TextView title1 = (TextView)convertView.findViewById(R.id.InTitleLabel);
+                title1.setText(expence.getTitle());
+                TextView amount1 = (TextView)convertView.findViewById(R.id.InAmountLabel);
+                amount1.setText(expence.getAmount().toString());
+                TextView date1 = (TextView)convertView.findViewById(R.id.Indate);
+                String [] s1 = expence.getDate().split(":");
+                date1.setText(s1[0] + " " +getMonth(Integer.parseInt(s1[1])) + " "+ s1[2]);
+                ImageView category1 = (ImageView)convertView.findViewById(R.id.IncategoryImage);
+                category1.setImageResource(f.getActivity().getResources().getIdentifier(Categories.getStr(expence.getCategory()).toLowerCase(), "drawable", f.getActivity().getPackageName()));
+                ImageView redbar = (ImageView)convertView.findViewById(R.id.bar);
+                redbar.setImageResource(f.getActivity().getResources().getIdentifier("redbar", "drawable", f.getActivity().getPackageName()));
+
               /*  Person person = (Person)getItem(position);
                 TextView name = (TextView)convertView.findViewById(R.id.nameLabel);
                 TextView address = (TextView)convertView.findViewById(R.id.addressLabel);
@@ -88,9 +135,9 @@ public class ListItemAdapter implements ListAdapter {
                 address.setText(person.getAddress());*/
                 break;
             case TYPE_DIVIDER:
-               /* TextView title = (TextView)convertView.findViewById(R.id.headerTitle);
+                TextView month = (TextView)convertView.findViewById(R.id.month);
                 String titleString = (String)getItem(position);
-                title.setText(titleString);*/
+                month.setText(titleString);
                 break;
         }
 
@@ -99,8 +146,12 @@ public class ListItemAdapter implements ListAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (getItem(position) instanceof ListItem) {
-            return TYPE_PERSON;
+        if (getItem(position) instanceof Income) {
+            return TYPE_INCOME;
+        }
+        else if (getItem(position) instanceof Expense)
+        {
+            return TYPE_EXPENSE;
         }
 
         return TYPE_DIVIDER;
@@ -108,7 +159,7 @@ public class ListItemAdapter implements ListAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override

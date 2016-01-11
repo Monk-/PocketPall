@@ -1,24 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bar"
+        android:id="@+id/bar" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/car"
+        android:layout_toRightOf="@id/bar"
+        android:layout_toEndOf="@+id/bar"
+        android:paddingLeft="5dp"
+        android:id="@+id/IncategoryImage" />
 
     <TextView
-        android:id="@+id/nameLabel"
+        android:id="@+id/InTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:layout_toRightOf="@id/IncategoryImage"
+        android:layout_toEndOf="@+id/IncategoryImage"
+        android:paddingTop="5dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         android:text="Name"
         />
 
-    <TextView
-        android:id="@+id/addressLabel"
+    <ImageView
+        android:id="@+id/currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="Address"
+        android:layout_below="@+id/InTitleLabel"
+        android:layout_toRightOf="@id/IncategoryImage"
+        android:layout_toEndOf="@+id/IncategoryImage"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:src="@drawable/currency"
         />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/InAmountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/InTitleLabel"
+        android:layout_toRightOf="@id/currency"
+        android:layout_toEndOf="@+id/currency"
+        android:paddingTop="6dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        android:text="Nddress"
+        />
+
+
+    <ImageView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/InTitleLabel"
+        android:layout_toRightOf="@id/InAmountLabel"
+        android:layout_toEndOf="@+id/InAmountLabel"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:src="@drawable/time"
+        />
+
+    <TextView
+        android:id="@+id/Indate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/InTitleLabel"
+        android:layout_toRightOf="@id/time"
+        android:layout_toEndOf="@+id/time"
+        android:paddingTop="6dp"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif"
+        android:text="Nddress"
+        />
+
+</RelativeLayout>
