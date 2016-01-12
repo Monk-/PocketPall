@@ -86,6 +86,26 @@ public class IncomeTemplate extends Template {
     }
 
     @Override
+    public List<ExIn> getCategory(SQLiteDatabase db, int cat) {
+        Cursor cursor = db.query(ColumnNames.Income.TABLE_NAME, // a. table
+                setColumns(), // b. column names
+                " category = ?", // c. selections
+                new String[]{"" + cat}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+        List<ExIn> listo = new ArrayList<>();
+        while(cursor.moveToNext())
+        {
+            listo.add(new Income(cursor.getString(0), cursor.getString(1),
+                    Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), cursor.getString(4)));
+        }
+        closeDb(db);
+        return listo;
+    }
+
+    @Override
     public boolean find(SQLiteDatabase db, ExIn come) {
         Cursor cursor = setCursor(db, ColumnNames.Income.TABLE_NAME, setColumns(), come);
         if (!(cursor.moveToFirst()) || cursor.getCount() ==0){

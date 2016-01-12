@@ -86,7 +86,13 @@ public abstract class Template extends SQLiteOpenHelper {
 
     public abstract String[] setColumns();
 
+    public List<ExIn> getCategoryAll(int cat)
+    {
+        SQLiteDatabase db = connectToDb();
+        return getCategory(db, cat);
+    }
 
+    public abstract List<ExIn> getCategory(SQLiteDatabase db, int cat);
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -10,4 +10,6 @@
     <color name="monthe">#91c2bf</color>
     <color name="textGray">#9c9c9c</color>
     <color name="bluee">#64B5F6</color>
+    <color name="greenChart">#009688</color>
+    <color name="redChart">#F06292</color>
 </resources>

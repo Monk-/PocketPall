@@ -70,6 +70,13 @@ public enum Categories {
         }
     }
 
+    public static String[] getListStr()
+    {
+        return new String[] {
+        "Car","Clothing","Electronics","Expenses","Home","Income","Work","Education","Sports"
+        };
+    }
+
     Categories(int code, String title) {
         this.code = code;
         this.title = title;
