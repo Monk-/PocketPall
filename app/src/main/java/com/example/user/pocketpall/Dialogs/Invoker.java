@@ -2,6 +2,8 @@ package com.example.user.pocketpall.Dialogs;
 
 import android.app.FragmentManager;
 
+import com.example.user.pocketpall.Classes.ExIn;
+
 
 public class Invoker {
     private Command command;
@@ -12,9 +14,7 @@ public class Invoker {
         return fg;
     }
 
-    public void setFg(FragmentManager fg)
-    {
-
+    public void setFg(FragmentManager fg) {
         this.fg = fg;
     }
 

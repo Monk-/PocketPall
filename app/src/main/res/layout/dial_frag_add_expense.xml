@@ -47,24 +47,6 @@
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:textColor="@color/textGray"
-            android:text="@string/Comment"/>
-
-        <EditText
-            android:id="@+id/Excomment"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingLeft="5dp"
-            android:backgroundTint="@color/bluee"
-            android:fontFamily="sans-serif"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingLeft="5dp"
-            android:textColor="@color/textGray"
             android:text="@string/Ammount"/>
 
         <EditText

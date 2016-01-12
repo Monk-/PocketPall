@@ -1,16 +1,14 @@
 package com.example.user.pocketpall.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.user.pocketpall.Classes.ExIn;
-import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.List.ListItem;
 import com.example.user.pocketpall.List.ListItemAdapter;
 import com.example.user.pocketpall.R;
@@ -20,12 +18,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import static com.example.user.pocketpall.MainActivity.*;
 
 public class Fragment1 extends Fragment {
-
+    public static View view;
+    public static ExIn exIn;
+    public static  ListView listView;
+    public static Fragment1 fragment1;
     public Fragment1() {
         // Required empty public constructor
     }
@@ -33,17 +33,25 @@ public class Fragment1 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragment1 = this;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment1, container, false);
-        ListView listView = (ListView)view.findViewById(R.id.listViewMainFrag);
-        List<ExIn> comes = incDB.getAllComes();
+        listView = (ListView)view.findViewById(R.id.listViewMainFrag);
+        refreshList(listView, this);
+        return view;
+
+    }
+
+    public static void refreshList(ListView listView, Fragment1 fragment1)
+    {
+        final List<ExIn> comes = incDB.getAllComes();
         comes.addAll(expDB.getAllComes());
         Collections.sort(comes, new LexicographicComparator());
-        List<Object> come = new ArrayList<>();
+        final List<Object> come = new ArrayList<>();
         int curMonth = 0;
         int month;
         if (comes.size() > 0) {
@@ -59,17 +67,23 @@ public class Fragment1 extends Fragment {
                 come.add(comes.get(i));
 
             }
-            listView.setAdapter(new ListItemAdapter(this, come));
+            listView.setAdapter(new ListItemAdapter(fragment1, come));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    exIn = (ExIn)come.get(position);
+                    invoker.setCommand(choseDialFrag);
+                    invoker.show();
+                }
+            });
         }
-        return view;
-
     }
 
     public static String getMonth(int month) {
         return new DateFormatSymbols().getMonths()[month];
     }
 
-    class LexicographicComparator implements Comparator<ExIn> {
+    static class LexicographicComparator implements Comparator<ExIn> {
 
         @Override
         public int compare(ExIn lhs, ExIn rhs) {

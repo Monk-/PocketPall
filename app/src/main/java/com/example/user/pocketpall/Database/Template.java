@@ -62,6 +62,31 @@ public abstract class Template extends SQLiteOpenHelper {
 
     public abstract void delete(SQLiteDatabase db, ExIn come);
 
+    public boolean checkIfexist(ExIn come)
+    {
+        SQLiteDatabase db = connectToDb();
+        boolean g = find(db, come);
+        closeDb(db);
+        return g;
+    }
+
+    public abstract boolean find(SQLiteDatabase db, ExIn come);
+
+    public Cursor setCursor(SQLiteDatabase db, String column, String[] columns, ExIn come)
+    {
+        return db.query(column, // a. table
+                columns, // b. column names
+                " title = ? and date = ?", // c. selections
+                new String[]{come.getTitle(), come.getDate()}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+    }
+
+    public abstract String[] setColumns();
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

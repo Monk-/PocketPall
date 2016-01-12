@@ -33,7 +33,7 @@ public class ExpoStrategy implements ImpoExpoStrategy
 
             if (sd.canWrite())
             {
-                String currentDBPath = "//data//" + "com.example.Project"
+                String currentDBPath = "//data//" + "com.example.user.pocketpall"
                         + "//databases//" + "BudgetDB";
                 String backupDBPath = "/BackupFolder/BudgetDB";
                 File currentDB = new File(data, currentDBPath);
@@ -44,16 +44,11 @@ public class ExpoStrategy implements ImpoExpoStrategy
                 dst.transferFrom(src, 0, src.size());
                 src.close();
                 dst.close();
-                Toast.makeText(ContextHelperClass.getAppContext(), backupDB.toString(),
-                        Toast.LENGTH_LONG).show();
 
             }
         } catch (Exception e)
         {
 
-            String l = e.toString();
-            Toast.makeText(ContextHelperClass.getAppContext(), e.toString(), Toast.LENGTH_LONG)
-                    .show();
 
         }
     }

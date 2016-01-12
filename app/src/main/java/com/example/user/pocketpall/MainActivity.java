@@ -24,8 +24,11 @@ import com.example.user.pocketpall.Database.IncomeTemplate;
 import com.example.user.pocketpall.Database.Template;
 import com.example.user.pocketpall.Dialogs.AddExpenseDialFrag;
 import com.example.user.pocketpall.Dialogs.AddIncomeDialFrag;
+import com.example.user.pocketpall.Dialogs.ChoseDialFrag;
 import com.example.user.pocketpall.Dialogs.Command;
+import com.example.user.pocketpall.Dialogs.EditComeDialFrag;
 import com.example.user.pocketpall.Dialogs.Invoker;
+import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.Fragments.PagerAdapter;
 import com.example.user.pocketpall.Menu.MenuAdapter;
 import com.example.user.pocketpall.Menu.MenuItom;
@@ -36,6 +39,7 @@ import com.example.user.pocketpall.RestoreAndBackup.ImpoStrategy;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import static com.example.user.pocketpall.Fragments.Fragment1.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,13 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ImpoExpoContext ctx; // import and export
 
-
     public static Invoker invoker;
     public static Command addIncomeDialFrag;
     public static Command addExpenseDialFrag;
-    public static Command deleteIncomeDialFrag;
-    public static Command deleteExpenseDialFrag;
-    public static Command decor;
+    public static Command choseDialFrag;
+    public static Command editDialFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         ctx.setImpoExpoStrategy(new ImpoStrategy());
                         ctx.doIt();
                         AppMsg.makeText(MainActivity.this, "Data restored", new AppMsg.Style(2000, R.color.green)).show();
+                        Fragment1.refreshList(listView, fragment1);
                         break;
                 }
             }
@@ -161,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
         invoker.setFg(getFragmentManager());
         addIncomeDialFrag = new AddIncomeDialFrag();
         addExpenseDialFrag = new AddExpenseDialFrag();
-        //deleteIncomeDialFrag = new DeleteIncomeDialFrag();
-        //deleteExpenseDialFrag = new DeleteExpenseDialFrag();
+        choseDialFrag = new ChoseDialFrag();
+        editDialFrag = new EditComeDialFrag();
 
     }
 
@@ -256,6 +259,17 @@ public class MainActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             date = Integer.toString(day) + ":"+
+                    Integer.toString(month) + ":" +
+                    Integer.toString(year);
+        }
+
+        public static String getCurrentDate()
+        {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            return Integer.toString(day) + ":"+
                     Integer.toString(month) + ":" +
                     Integer.toString(year);
         }

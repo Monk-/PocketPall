@@ -19,6 +19,8 @@ import com.example.user.pocketpall.Classes.Categories;
 import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.ContextHelperClass;
+import com.example.user.pocketpall.Fragments.Fragment1;
+import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ import java.util.List;
 import static com.example.user.pocketpall.MainActivity.date;
 import static com.example.user.pocketpall.MainActivity.expDB;
 
+import static com.example.user.pocketpall.Fragments.Fragment1.*;
+
 
 public class AddExpenseDialFrag extends DialogFragment implements Command {
     public View dialogView;
@@ -34,7 +38,6 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
     public List<String> names;
 
     EditText title1;
-    EditText comment1;
     EditText amount1;
     Spinner category1;
 
@@ -54,52 +57,33 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
-         /*   List <User> users = db.getAllUsers();
-            names = new ArrayList<String>();
-            for (int i=0;i<users.size();i++)
-            {
-                String p = users.get(i).getName();
-                names.add(p);
-            }
-            ArrayAdapter adapter = new ArrayAdapter(ContextHelperClass.getAppContext(),R.layout.my_list_item,names);
-            actv = (AutoCompleteTextView)dialogView.findViewById(R.id.autoCompleteTextView);
-            actv.setAdapter(adapter);*/
-
 
         builder.setView(dialogView)
                 // Add action buttons
-                .setPositiveButton("Add", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id)
-                    {
+                    public void onClick(DialogInterface dialog, int id) {
                         initLayout();
                         String title = title1.getText().toString();
-                        String comment = comment1.getText().toString();
                         Double amount = Double.parseDouble(!amount1.getText().toString().equals("") ? amount1.getText().toString() : "-1.0");
                         Integer category = Categories.getInt(category1.getSelectedItem().toString());
                         boolean okey = true;
-                        if (title.equals("") || comment.equals("") || amount == -1 || category == -1 || date.equals("")) {
+                        if (date.equals("")) {
+                            date = MainActivity.DatePickerFragment.getCurrentDate();
+                        }
+                        if (title.equals("") || amount == -1 || category == -1 || date.equals("")) {
                             okey = false;
                         }
                         if (okey) {
-                            expDB.addToDb(new Expense(title, comment, amount, category, date));
-                            //controllerInc.setList("Income", getActivity());
-                            // db.addIncome(new Income(owner, name, mode, income, date));
-                            //if (preferences.getString("Activity", "").equals("2")) {
-                            //    checkDisOutNigga();
-                            //}
-                            //controllerInc.UpdateAdapterIncome(sumin, listview_in);
-                            //Toast.makeText(ContextHelperClass.getAppContext(), "Income successfully added.", Toast.LENGTH_LONG).show();
-                        } else {
-                            //Toast.makeText(ContextHelperClass.getAppContext(), "There is no user with this name or there is other problem with data", Toast.LENGTH_LONG).show();
+                            expDB.addToDb(new Expense(title, "", amount, category, date));
                         }
+                        date = "";
+                        Fragment1.refreshList(listView, fragment1);
+
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
                     }
                 });
@@ -111,7 +95,7 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
     private void initLayout()
     {
         title1 = (EditText) dialogView.findViewById(R.id.Extitle);
-        comment1 = (EditText) dialogView.findViewById(R.id.Excomment);
+
         amount1 = (EditText) dialogView.findViewById(R.id.Examount);
         category1 = (Spinner) dialogView.findViewById(R.id.ExcategorySpinner);
     }

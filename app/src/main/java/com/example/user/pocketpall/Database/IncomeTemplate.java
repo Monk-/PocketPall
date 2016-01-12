@@ -74,4 +74,23 @@ public class IncomeTemplate extends Template {
                 " title = ? and date = ?",  // selections
                 new String[]{come.getTitle(), come.getDate()}); //selections args
     }
+
+    @Override
+    public String[] setColumns() {
+        return new String[]{ColumnNames.Income.COLUMN_INCOME_TITLE,
+                ColumnNames.Income.COLUMN_INCOME_COMMENT,
+        ColumnNames.Income.COLUMN_INCOME_AMOUNT,
+        ColumnNames.Income.COLUMN_INCOME_CATEGORY,
+        ColumnNames.Income.COLUMN_INCOME_DATE
+        };
+    }
+
+    @Override
+    public boolean find(SQLiteDatabase db, ExIn come) {
+        Cursor cursor = setCursor(db, ColumnNames.Income.TABLE_NAME, setColumns(), come);
+        if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
+            return false;
+        }
+        return true;
+    }
 }

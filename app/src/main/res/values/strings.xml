@@ -19,4 +19,7 @@
     <string name="Ammount">Amount</string>
     <string name="pickDate">Pick date</string>
     <string name="add_expense">Add Expense</string>
+    <string name="Options">Options</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
 </resources>

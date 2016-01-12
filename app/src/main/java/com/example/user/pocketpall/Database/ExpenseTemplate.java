@@ -76,4 +76,22 @@ public class ExpenseTemplate extends Template{
                 " title = ? and date = ?",  // selections
                 new String[] {come.getTitle(), come.getDate() }); //selections args
     }
+
+    @Override
+    public String[] setColumns() {
+        return new String[]{ColumnNames.Expense.COLUMN_EXPENSE_TITLE,
+        ColumnNames.Expense.COLUMN_EXPENSE_COMMENT,
+        ColumnNames.Expense.COLUMN_EXPENSE_AMOUNT,
+        ColumnNames.Expense.COLUMN_EXPENSE_CATEGORY,
+      ColumnNames.Expense.COLUMN_EXPENSE_DATE};
+    }
+
+    @Override
+    public boolean find(SQLiteDatabase db, ExIn come) {
+        Cursor cursor = setCursor(db, ColumnNames.Expense.TABLE_NAME, setColumns(), come);
+        if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
+            return false;
+        }
+        return true;
+    }
 }

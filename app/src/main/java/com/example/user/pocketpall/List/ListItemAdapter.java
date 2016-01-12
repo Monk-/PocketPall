@@ -2,7 +2,6 @@ package com.example.user.pocketpall.List;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,10 @@ import com.example.user.pocketpall.Classes.Categories;
 import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
-import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import static  com.example.user.pocketpall.Fragments.Fragment1.*;
 
 public class ListItemAdapter implements ListAdapter {
@@ -100,7 +96,7 @@ public class ListItemAdapter implements ListAdapter {
                 TextView title = (TextView)convertView.findViewById(R.id.InTitleLabel);
                 title.setText(income.getTitle());
                 TextView amount = (TextView)convertView.findViewById(R.id.InAmountLabel);
-                amount.setText(income.getAmount().toString());
+                amount.setText(income.getAmount().toString() + " zł");
                 TextView date = (TextView)convertView.findViewById(R.id.Indate);
                 String [] s = income.getDate().split(":");
                 date.setText(s[0] + " " +getMonth(Integer.parseInt(s[1])) + " "+ s[2]);
@@ -108,18 +104,13 @@ public class ListItemAdapter implements ListAdapter {
                 category.setImageResource(f.getActivity().getResources().getIdentifier(Categories.getStr(income.getCategory()).toLowerCase(), "drawable", f.getActivity().getPackageName()));
                 ImageView greenbar = (ImageView)convertView.findViewById(R.id.bar);
                 greenbar.setImageResource(f.getActivity().getResources().getIdentifier("greenbar", "drawable", f.getActivity().getPackageName()));
-              /*  Person person = (Person)getItem(position);
-                TextView name = (TextView)convertView.findViewById(R.id.nameLabel);
-                TextView address = (TextView)convertView.findViewById(R.id.addressLabel);
-                name.setText(person.getName());
-                address.setText(person.getAddress());*/
                 break;
             case TYPE_EXPENSE:
                 ExIn expence = (ExIn)getItem(position);
                 TextView title1 = (TextView)convertView.findViewById(R.id.InTitleLabel);
                 title1.setText(expence.getTitle());
                 TextView amount1 = (TextView)convertView.findViewById(R.id.InAmountLabel);
-                amount1.setText(expence.getAmount().toString());
+                amount1.setText(expence.getAmount().toString() + " zł");
                 TextView date1 = (TextView)convertView.findViewById(R.id.Indate);
                 String [] s1 = expence.getDate().split(":");
                 date1.setText(s1[0] + " " +getMonth(Integer.parseInt(s1[1])) + " "+ s1[2]);
@@ -127,12 +118,6 @@ public class ListItemAdapter implements ListAdapter {
                 category1.setImageResource(f.getActivity().getResources().getIdentifier(Categories.getStr(expence.getCategory()).toLowerCase(), "drawable", f.getActivity().getPackageName()));
                 ImageView redbar = (ImageView)convertView.findViewById(R.id.bar);
                 redbar.setImageResource(f.getActivity().getResources().getIdentifier("redbar", "drawable", f.getActivity().getPackageName()));
-
-              /*  Person person = (Person)getItem(position);
-                TextView name = (TextView)convertView.findViewById(R.id.nameLabel);
-                TextView address = (TextView)convertView.findViewById(R.id.addressLabel);
-                name.setText(person.getName());
-                address.setText(person.getAddress());*/
                 break;
             case TYPE_DIVIDER:
                 TextView month = (TextView)convertView.findViewById(R.id.month);

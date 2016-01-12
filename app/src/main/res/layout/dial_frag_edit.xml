@@ -41,8 +41,6 @@
             android:backgroundTint="@color/bluee"
             android:paddingLeft="5dp"/>
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
