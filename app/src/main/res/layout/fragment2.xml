@@ -33,17 +33,23 @@
         android:layout_width="match_parent"
         android:id="@+id/piechart"
         android:visibility="visible"
-        android:layout_height="match_parent">
-        </com.github.mikephil.charting.charts.PieChart>
+        android:layout_height="match_parent"/>
+
 
     <com.github.mikephil.charting.charts.RadarChart
         android:layout_below="@+id/line"
         android:layout_width="match_parent"
         android:id="@+id/radarchart"
         android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-    </com.github.mikephil.charting.charts.RadarChart>
 
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:layout_below="@+id/line"
+        android:layout_width="match_parent"
+        android:id="@+id/barchart"
+        android:visibility="gone"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

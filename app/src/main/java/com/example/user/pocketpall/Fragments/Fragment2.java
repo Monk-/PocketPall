@@ -15,26 +15,37 @@ import com.example.user.pocketpall.Classes.Categories;
 import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.R;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.user.pocketpall.MainActivity.*;
 
 
 public class Fragment2 extends Fragment {
-
+    private View view;
     private PieChart mChart;
     private RadarChart rChart;
+    private HorizontalBarChart bChart;
+    private Spinner categ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,20 +53,26 @@ public class Fragment2 extends Fragment {
 
     }
 
+    private void init()
+    {
+        mChart = (PieChart) view.findViewById(R.id.piechart);
+        rChart = (RadarChart) view.findViewById(R.id.radarchart);
+        bChart = (HorizontalBarChart) view.findViewById(R.id.barchart);
+        categ = (Spinner)view.findViewById(R.id.periodSpinner);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment2, container, false);
-        mChart = (PieChart) view.findViewById(R.id.piechart);
-        rChart = (RadarChart) view.findViewById(R.id.radarchart);
-        Spinner period = (Spinner)view.findViewById(R.id.periodSpinner);
-        String[] items = new String[]{"Month", "Year"};
+        view = inflater.inflate(R.layout.fragment2, container, false);
+        init();
+        String[] items = Categories.getListStr();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
-        period.setAdapter(adapter);
+        categ.setAdapter(adapter);
 
         Spinner typeChart = (Spinner)view.findViewById(R.id.chartSpinner);
-        String[] items1 = new String[]{"PieChart", "RadarChart"};
+        String[] items1 = new String[]{"PieChart", "RadarChart", "BarChart"};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items1);
         typeChart.setAdapter(adapter1);
@@ -64,26 +81,89 @@ public class Fragment2 extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 switch (position) {
                     case 0:
-                        PieChart(view);
+                        PieChart();
                         rChart.setVisibility(View.GONE);
+                        bChart.setVisibility(View.GONE);
                         break;
                     case 1:
-                        RadarChart(view);
+                        RadarChart();
                         mChart.setVisibility(View.GONE);
+                        bChart.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        BarChart();
+                        mChart.setVisibility(View.GONE);
+                        rChart.setVisibility(View.GONE);
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                PieChart(view);
+                PieChart();
             }
 
         });
         return view;
     }
 
-    public void RadarChart(View view)
+    public void BarChart()
+    {
+        bChart.setVisibility(View.VISIBLE);
+        bChart.setMaxVisibleValueCount(60);
+        bChart.setPinchZoom(false);
+        bChart.setDrawGridBackground(false);
+        XAxis xAxis = bChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(2);
+
+
+        YAxis leftAxis = bChart.getAxisLeft();
+        leftAxis.setLabelCount(8, false);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+
+        YAxis rightAxis = bChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        rightAxis.setLabelCount(8, false);
+        rightAxis.setSpaceTop(15f);
+
+        ArrayList<String> xVals = new ArrayList<>();
+        xVals = new ArrayList<String>(Arrays.asList(Categories.getListStr()));
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        double g;
+        for (int i=0;i< Categories.values().length;i++)
+        {
+            g = 0;
+            for (ExIn inca :incDB.getCategoryAll(i))
+            {
+                g += inca.getAmount();
+            }
+            yVals1.add(new BarEntry((float)g,i));
+          /*  g1 = 0;
+            for (ExIn inca :expDB.getCategoryAll(i))
+            {
+                g1 += inca.getAmount();
+            }
+            entries2.add(new Entry((float)g1,i));*/
+        }
+
+
+        BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
+        set1.setBarSpacePercent(35f);
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+
+        bChart.setData(data);
+    }
+
+    public void RadarChart()
     {
         rChart.setVisibility(View.VISIBLE);
         rChart.setWebLineWidth(1.5f);
@@ -108,9 +188,9 @@ public class Fragment2 extends Fragment {
             entries2.add(new Entry((float)g1,i));
         }
 
-        RadarDataSet dataset_comp1 = new RadarDataSet(entries, "Company1");
+        RadarDataSet dataset_comp1 = new RadarDataSet(entries, "Income");
 
-        RadarDataSet dataset_comp2 = new RadarDataSet(entries2, "Company2");
+        RadarDataSet dataset_comp2 = new RadarDataSet(entries2, "Expense");
 
         dataset_comp1.setColor(getResources().getColor(R.color.greenChart));
 
@@ -128,7 +208,7 @@ public class Fragment2 extends Fragment {
         rChart.invalidate();
     }
 
-    public void PieChart(View view)
+    public void PieChart()
     {
         mChart.setVisibility(View.VISIBLE);
         List<ExIn> inco = new ArrayList<>();
