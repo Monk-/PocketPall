@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
+import com.example.user.pocketpall.Fragments.Fragment2;
 import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
@@ -41,6 +42,23 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
     public AddIncomeDialFrag() {
     }
 
+    public static void refreshCharts()
+    {
+        switch(Fragment2.whichChart)
+        {
+            case 0:
+                Fragment2.PieChart();
+                break;
+            case 1:
+                Fragment2.RadarChart();
+                break;
+            case 2:
+                Fragment2.barChartSettings();
+                Fragment2.BarChart(Fragment2.period, Fragment2.incOrExp);
+                break;
+        }
+    }
+
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -52,17 +70,6 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
-         /*   List <User> users = db.getAllUsers();
-            names = new ArrayList<String>();
-            for (int i=0;i<users.size();i++)
-            {
-                String p = users.get(i).getName();
-                names.add(p);
-            }
-            ArrayAdapter adapter = new ArrayAdapter(ContextHelperClass.getAppContext(),R.layout.my_list_item,names);
-            actv = (AutoCompleteTextView)dialogView.findViewById(R.id.autoCompleteTextView);
-            actv.setAdapter(adapter);*/
-
 
         builder.setView(dialogView)
                 // Add action buttons
@@ -87,6 +94,8 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
                              }
                         date = "";
                         Fragment1.refreshList(listView, fragment1);
+                        refreshCharts();
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

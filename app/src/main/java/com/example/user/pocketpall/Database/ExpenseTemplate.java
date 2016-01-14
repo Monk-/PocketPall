@@ -7,14 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Expense;
-import com.example.user.pocketpall.Classes.Income;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by User on 10/1/2016.
- */
 public class ExpenseTemplate extends Template{
 
     public ExpenseTemplate(Context context) {
@@ -101,6 +98,28 @@ public class ExpenseTemplate extends Template{
         {
             listo.add(new Expense(cursor.getString(0), cursor.getString(1),
                     Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), cursor.getString(4)));
+        }
+        closeDb(db);
+        return listo;
+    }
+
+    @Override
+    public List<ExIn> getMonthCome(SQLiteDatabase db, int month, int cat) {
+        Cursor cursor = db.query(ColumnNames.Expense.TABLE_NAME, // a. table
+                setColumns(), // b. column names
+                " category = ?", // c. selections
+                new String[]{"" + cat}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+        List<ExIn> listo = new ArrayList<>();
+        while(cursor.moveToNext())
+        {
+            Expense expense = new Expense(cursor.getString(0), cursor.getString(1),
+                    Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), cursor.getString(4));
+            if (Integer.parseInt(expense.getMonth())== month)
+                listo.add(expense);
         }
         closeDb(db);
         return listo;

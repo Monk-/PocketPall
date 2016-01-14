@@ -94,6 +94,14 @@ public abstract class Template extends SQLiteOpenHelper {
 
     public abstract List<ExIn> getCategory(SQLiteDatabase db, int cat);
 
+    public List<ExIn> getAllComesForParticulatMonth(int month, int cat)
+    {
+        SQLiteDatabase db = connectToDb();
+        return getMonthCome(db, month, cat);
+    }
+
+    public abstract List<ExIn> getMonthCome(SQLiteDatabase db, int month, int cat);
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_INCOME_TABLE = "CREATE TABLE " + ColumnNames.Income.TABLE_NAME + " ( " +

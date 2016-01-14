@@ -5,8 +5,6 @@ public class MenuItom {
     private String title;
     private int icon;
 
-    public MenuItom(){}
-
     public MenuItom(String title, int icon){
         this.title = title;
         this.icon = icon;

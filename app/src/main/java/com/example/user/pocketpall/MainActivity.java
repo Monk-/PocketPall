@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-    private ArrayList<MenuItom> menuItems;
+    private ArrayList<Object> menuItems;
     private MenuAdapter menuAdapter;
 
     private Toolbar toolbar;
@@ -97,20 +97,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         invoker.setCommand(addIncomeDialFrag);
                         invoker.show();
                         break;
-                    case 1:
+                    case 2:
                         invoker.setCommand(addExpenseDialFrag);
                         invoker.show();
                         break;
-                    case 2:
+                    case 4:
                         ctx.setImpoExpoStrategy(new ExpoStrategy());
                         ctx.doIt();
                         AppMsg.makeText(MainActivity.this, "Backup created", new AppMsg.Style(2000, R.color.green)).show();
                         break;
-                    case 3:
+                    case 5:
                         ctx.setImpoExpoStrategy(new ImpoStrategy());
                         ctx.doIt();
                         AppMsg.makeText(MainActivity.this, "Data restored", new AppMsg.Style(2000, R.color.green)).show();
@@ -171,8 +171,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
         menuItems = new ArrayList<>();
+        menuItems.add("Management");
         menuItems.add(new MenuItom("Add Income", R.drawable.income1));
         menuItems.add(new MenuItom("Add Expense", R.drawable.expence));
+        menuItems.add("Useful functions");
         menuItems.add(new MenuItom("Create backup", R.drawable.save));
         menuItems.add(new MenuItom("Restore backup", R.drawable.restore));
         menuAdapter = new MenuAdapter(getApplicationContext(),

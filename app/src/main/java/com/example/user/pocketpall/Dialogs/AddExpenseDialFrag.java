@@ -26,6 +26,7 @@ import com.example.user.pocketpall.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.user.pocketpall.Dialogs.AddIncomeDialFrag.refreshCharts;
 import static com.example.user.pocketpall.MainActivity.date;
 import static com.example.user.pocketpall.MainActivity.expDB;
 
@@ -79,6 +80,7 @@ public class AddExpenseDialFrag extends DialogFragment implements Command {
                         }
                         date = "";
                         Fragment1.refreshList(listView, fragment1);
+                        refreshCharts();
 
                     }
                 })

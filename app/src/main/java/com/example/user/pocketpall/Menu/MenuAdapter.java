@@ -9,26 +9,52 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.user.pocketpall.Classes.Categories;
+import com.example.user.pocketpall.Classes.ExIn;
+import com.example.user.pocketpall.Classes.Expense;
+import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by User on 1/1/2016.
- */
+import static com.example.user.pocketpall.Fragments.Fragment1.getMonth;
+
 public class MenuAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<MenuItom> menuItems;
+    private ArrayList<Object> menuItems;
+    private static final int TYPE_DIVIDER = 0;
+    private static final int TYPE_ITEM = 1;
+    private LayoutInflater inflater;
 
-    public MenuAdapter(Context context, ArrayList<MenuItom> navDrawerItems) {
+    public MenuAdapter(Context context, ArrayList<Object> navDrawerItems) {
         this.context = context;
         this.menuItems = navDrawerItems;
+        this.inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return (getItemViewType(position) == TYPE_ITEM);
     }
 
     @Override
     public int getCount() {
         return menuItems.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (getItem(position) instanceof MenuItom) {
+            return TYPE_ITEM;
+        }
+
+        return TYPE_DIVIDER;
     }
 
     @Override
@@ -42,18 +68,46 @@ public class MenuAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        int type = getItemViewType(position);
         if (convertView == null) {
-            LayoutInflater mInflater = (LayoutInflater)
-                    context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.menu_list_item, null);
+            switch (type) {
+                case TYPE_ITEM:
+                    convertView = inflater.inflate(R.layout.menu_list_item, null);
+                    break;
+                case TYPE_DIVIDER:
+                    convertView = inflater.inflate(R.layout.row_header_menu, parent, false);
+                    break;
+            }
         }
 
-        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
-        TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+        switch (type) {
+            case TYPE_ITEM:
+                ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
+                TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 
-        imgIcon.setImageResource(menuItems.get(position).getIcon());
-        txtTitle.setText(menuItems.get(position).getTitle());
+                imgIcon.setImageResource(((MenuItom)menuItems.get(position)).getIcon());
+                txtTitle.setText(((MenuItom)menuItems.get(position)).getTitle());
+                break;
+            case TYPE_DIVIDER:
+                TextView month = (TextView)convertView.findViewById(R.id.month);
+                String titleString = (String)getItem(position);
+                month.setText(titleString);
+                break;
+        }
+
+
         return convertView;
     }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
 }

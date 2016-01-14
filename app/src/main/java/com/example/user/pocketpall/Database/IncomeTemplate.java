@@ -38,7 +38,6 @@ public class IncomeTemplate extends Template {
                 values);
     }
 
-
     @Override
     public String buildQuery() {
         return "SELECT  * FROM " + ColumnNames.Income.TABLE_NAME;
@@ -76,6 +75,29 @@ public class IncomeTemplate extends Template {
     }
 
     @Override
+    public List<ExIn> getMonthCome(SQLiteDatabase db, int month, int cat) {
+        Cursor cursor = db.query(ColumnNames.Income.TABLE_NAME, // a. table
+                setColumns(), // b. column names
+                " category = ?", // c. selections
+                new String[]{"" + cat}, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+        List<ExIn> listo = new ArrayList<>();
+        while(cursor.moveToNext())
+        {
+            Income income = new Income(cursor.getString(0), cursor.getString(1),
+                    Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(3)), cursor.getString(4));
+            if (Integer.parseInt(income.getMonth())== month)
+            listo.add(income);
+        }
+        closeDb(db);
+        return listo;
+    }
+
+
+    @Override
     public String[] setColumns() {
         return new String[]{ColumnNames.Income.COLUMN_INCOME_TITLE,
                 ColumnNames.Income.COLUMN_INCOME_COMMENT,
@@ -104,6 +126,8 @@ public class IncomeTemplate extends Template {
         closeDb(db);
         return listo;
     }
+
+
 
     @Override
     public boolean find(SQLiteDatabase db, ExIn come) {
