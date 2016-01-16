@@ -159,7 +159,7 @@ public class Fragment2 extends Fragment {
 
         ArrayList<BarEntry> yVals1 = barChartPer(period, incExp);
 
-        BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
+        BarDataSet set1 = new BarDataSet(yVals1, "");
         set1.setBarSpacePercent(35f);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();

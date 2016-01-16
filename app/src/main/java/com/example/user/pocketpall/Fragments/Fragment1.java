@@ -76,7 +76,7 @@ public class Fragment1 extends Fragment {
     public static void refreshList(ListView listView, Fragment1 fragment1)
     {
         final List<Object> come = getList();
-        if (come.size() > 0) {
+        //if (come.size() > 0) {
             listItemAdapter = new ListItemAdapter(fragment1, come);
             listView.setAdapter(listItemAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,7 +87,7 @@ public class Fragment1 extends Fragment {
                     invoker.show();
                 }
             });
-        }
+      //  }
     }
 
     public static String getMonth(int month) {

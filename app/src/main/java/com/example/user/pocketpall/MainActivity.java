@@ -29,6 +29,7 @@ import com.example.user.pocketpall.Dialogs.Command;
 import com.example.user.pocketpall.Dialogs.EditComeDialFrag;
 import com.example.user.pocketpall.Dialogs.Invoker;
 import com.example.user.pocketpall.Fragments.Fragment1;
+import com.example.user.pocketpall.Fragments.Fragment3;
 import com.example.user.pocketpall.Fragments.PagerAdapter;
 import com.example.user.pocketpall.Menu.MenuAdapter;
 import com.example.user.pocketpall.Menu.MenuItom;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    public String dollar = " $";
+    public String zloty = " zł";
+    public static String currency = " zł";
 
     public static  String date =""; //date picker result
 
@@ -116,6 +120,13 @@ public class MainActivity extends AppCompatActivity {
                         AppMsg.makeText(MainActivity.this, "Data restored", new AppMsg.Style(2000, R.color.green)).show();
                         Fragment1.refreshList(listView, fragment1);
                         break;
+                    case 6:
+                        incDB.delete();
+                        AppMsg.makeText(MainActivity.this, "Database deleted", new AppMsg.Style(2000, R.color.green)).show();
+                        Fragment1.refreshList(listView, fragment1);
+                        AddIncomeDialFrag.refreshCharts();
+                        Fragment3.refresh3Frag();
+                        break;
                 }
             }
         });
@@ -174,9 +185,10 @@ public class MainActivity extends AppCompatActivity {
         menuItems.add("Management");
         menuItems.add(new MenuItom("Add Income", R.drawable.income1));
         menuItems.add(new MenuItom("Add Expense", R.drawable.expence));
-        menuItems.add("Useful functions");
+        menuItems.add("Database");
         menuItems.add(new MenuItom("Create backup", R.drawable.save));
         menuItems.add(new MenuItom("Restore backup", R.drawable.restore));
+        menuItems.add(new MenuItom("Delete database", R.drawable.delete_database));
         menuAdapter = new MenuAdapter(getApplicationContext(),
                 menuItems);
         mDrawerList.setAdapter(menuAdapter);
@@ -226,22 +238,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.dollar:
+                item.setChecked(true);
+                currency = dollar;
+                return true;
+            case R.id.zloty:
+                item.setChecked(true);
+                currency = zloty;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public static class DatePickerFragment extends DialogFragment

@@ -15,6 +15,7 @@ import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.Fragments.Fragment1;
+import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
 import java.util.List;
@@ -101,7 +102,7 @@ public class ListItemAdapter implements ListAdapter {
                 TextView title = (TextView)convertView.findViewById(R.id.InTitleLabel);
                 title.setText(income.getTitle());
                 TextView amount = (TextView)convertView.findViewById(R.id.InAmountLabel);
-                amount.setText(income.getAmount().toString() + " zł");
+                amount.setText(income.getAmount().toString() + MainActivity.currency);
                 TextView date = (TextView)convertView.findViewById(R.id.Indate);
                 String [] s = income.getDate().split(":");
                 date.setText(s[0] + " " +getMonth(Integer.parseInt(s[1])) + " "+ s[2]);

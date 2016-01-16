@@ -3,8 +3,10 @@ package com.example.user.pocketpall.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.user.pocketpall.Classes.ExIn;
 
@@ -89,7 +91,9 @@ public abstract class Template extends SQLiteOpenHelper {
     public List<ExIn> getCategoryAll(int cat)
     {
         SQLiteDatabase db = connectToDb();
-        return getCategory(db, cat);
+        List <ExIn> temp = getCategory(db, cat);
+        closeDb(db);
+        return temp;
     }
 
     public abstract List<ExIn> getCategory(SQLiteDatabase db, int cat);
@@ -97,10 +101,23 @@ public abstract class Template extends SQLiteOpenHelper {
     public List<ExIn> getAllComesForParticulatMonth(int month, int cat)
     {
         SQLiteDatabase db = connectToDb();
-        return getMonthCome(db, month, cat);
+        List<ExIn> temp = getMonthCome(db, month, cat);
+        return temp;
     }
 
     public abstract List<ExIn> getMonthCome(SQLiteDatabase db, int month, int cat);
+
+    public void delete()
+    {   SQLiteDatabase db = connectToDb();
+        try {
+            db.isOpen();
+        } catch (SQLException sqle) {
+            Log.e("TAG", "Never ignore exception!!! " + sqle);
+        }
+        db.execSQL("DROP TABLE IF EXISTS " + ColumnNames.Income.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ColumnNames.Expense.TABLE_NAME);
+        this.onCreate(db);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

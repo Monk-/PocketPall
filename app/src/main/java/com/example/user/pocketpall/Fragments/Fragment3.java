@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -24,6 +25,7 @@ import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.List.ListItem;
 import com.example.user.pocketpall.List.ListItemAdapter;
+import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 import com.example.user.pocketpall.StatisticList.ExpandableHeightListView;
 import com.example.user.pocketpall.StatisticList.StatisticAdapter;
@@ -44,33 +46,34 @@ public class Fragment3 extends Fragment {
     static TextView textView;
     static LinearLayout linearLayout;
     public static boolean instant = false;
+    public static int allIncExp = 0; // 0 All 1 Inc 2 Exp
 
     void initListViews()
     {
         listso = new ArrayList<>();
         linear = new ArrayList<>();
-        this.listso.add((ExpandableHeightListView) view.findViewById(R.id.Car));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Clothing));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Electronics));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Expenses));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Home));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Income));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Work));
-        this.listso.add((ExpandableHeightListView)view.findViewById(R.id.Education));
-        this.listso.add((ExpandableHeightListView) view.findViewById(R.id.Sports));
+        listso.add((ExpandableHeightListView) view.findViewById(R.id.Car));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Clothing));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Electronics));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Expenses));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Home));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Income));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Work));
+        listso.add((ExpandableHeightListView)view.findViewById(R.id.Education));
+        listso.add((ExpandableHeightListView) view.findViewById(R.id.Sports));
         for (ExpandableHeightListView lv: listso)
         {
             lv.setExpanded(true);
         }
-        this.linear.add((LinearLayout) view.findViewById(R.id.CarLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.ClothingLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.ElectronicsLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.ExpensesLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.HomeLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.IncomeLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.WorkLin));
-        this.linear.add((LinearLayout)view.findViewById(R.id.EducationLin));
-        this.linear.add((LinearLayout) view.findViewById(R.id.SportsLin));
+        linear.add((LinearLayout) view.findViewById(R.id.CarLin));
+        linear.add((LinearLayout)view.findViewById(R.id.ClothingLin));
+        linear.add((LinearLayout)view.findViewById(R.id.ElectronicsLin));
+        linear.add((LinearLayout)view.findViewById(R.id.ExpensesLin));
+        linear.add((LinearLayout)view.findViewById(R.id.HomeLin));
+        linear.add((LinearLayout)view.findViewById(R.id.IncomeLin));
+        linear.add((LinearLayout)view.findViewById(R.id.WorkLin));
+        linear.add((LinearLayout)view.findViewById(R.id.EducationLin));
+        linear.add((LinearLayout) view.findViewById(R.id.SportsLin));
 
         textView = (TextView)view.findViewById(R.id.greenLineText);
         linearLayout = (LinearLayout)view.findViewById(R.id.greenLine);
@@ -109,6 +112,19 @@ public class Fragment3 extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                allIncExp = position;
+                refresh3Frag();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+
+        });
     }
 
     public static void refresh3Frag()
@@ -121,8 +137,24 @@ public class Fragment3 extends Fragment {
         {
             come = new ArrayList<>();
             cat = Categories.getStr(i);
-            exIns = incDB.getCategoryAll(i);
-            exIns.addAll(expDB.getCategoryAll(i));
+            switch(Fragment3.allIncExp)
+            {
+                case 0:
+                    exIns = incDB.getCategoryAll(i);
+                    exIns.addAll(expDB.getCategoryAll(i));
+                    break;
+                case 1:
+                    exIns = incDB.getCategoryAll(i);
+                    break;
+                case 2:
+                    exIns = expDB.getCategoryAll(i);
+                    break;
+                default:
+                    exIns = incDB.getCategoryAll(i);
+                    exIns.addAll(expDB.getCategoryAll(i));
+                    break;
+            }
+
             Collections.sort(exIns, new LexicographicComparator());
             double sum = 0;
             for (ExIn exIn: exIns)
@@ -152,7 +184,7 @@ public class Fragment3 extends Fragment {
             }
 
         }
-        textView.setText("Balance: " + sumAll.toString() + " $");
+        textView.setText("Balance: " + sumAll.toString() + MainActivity.currency);
 
         if (sumAll < 0)
         {

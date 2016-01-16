@@ -38,10 +38,10 @@ public class StatisticAdapter implements ListAdapter {
     public StatisticAdapter(Fragment3 fragment3, List<Object> people, double sum) {
         this.fragment3 = fragment3;
         this.statisticArray = people;
-        this.inflater = (LayoutInflater)fragment3.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        faceBold = Typeface.createFromAsset(fragment3.getActivity().getAssets(),
+        this.inflater = (LayoutInflater)Fragment3.f3Act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        faceBold = Typeface.createFromAsset(Fragment3.f3Act.getAssets(),
                 "fonts/OpenSans-Bold.ttf");
-        faceRegular = Typeface.createFromAsset(fragment3.getActivity().getAssets(),
+        faceRegular = Typeface.createFromAsset(Fragment3.f3Act.getAssets(),
                 "fonts/OpenSans-Regular.ttf");
         this.sum = sum;
     }
