@@ -1,10 +1,12 @@
 package com.example.user.pocketpall.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -26,14 +28,14 @@ public class Fragment1 extends Fragment {
     public static ExIn exIn;
     public static  ListView listView;
     public static Fragment1 fragment1;
-    public Fragment1() {
-        // Required empty public constructor
-    }
+    public static Activity f1Act;
+    public static ListItemAdapter listItemAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragment1 = this;
+        f1Act = fragment1.getActivity();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class Fragment1 extends Fragment {
 
     }
 
-    public static void refreshList(ListView listView, Fragment1 fragment1)
+    public static List<Object> getList()
     {
         final List<ExIn> comes = incDB.getAllComes();
         comes.addAll(expDB.getAllComes());
@@ -67,7 +69,16 @@ public class Fragment1 extends Fragment {
                 come.add(comes.get(i));
 
             }
-            listView.setAdapter(new ListItemAdapter(fragment1, come));
+        }
+        return come;
+    }
+
+    public static void refreshList(ListView listView, Fragment1 fragment1)
+    {
+        final List<Object> come = getList();
+        if (come.size() > 0) {
+            listItemAdapter = new ListItemAdapter(fragment1, come);
+            listView.setAdapter(listItemAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {

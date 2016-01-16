@@ -20,6 +20,7 @@ import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.Fragments.Fragment2;
+import com.example.user.pocketpall.Fragments.Fragment3;
 import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
@@ -95,6 +96,8 @@ public class AddIncomeDialFrag extends DialogFragment implements Command {
                         date = "";
                         Fragment1.refreshList(listView, fragment1);
                         refreshCharts();
+                        if (Fragment3.instant)
+                        Fragment3.refresh3Frag();
 
                     }
                 })

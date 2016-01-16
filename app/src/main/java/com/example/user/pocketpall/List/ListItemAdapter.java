@@ -1,5 +1,6 @@
 package com.example.user.pocketpall.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;
@@ -25,12 +26,16 @@ public class ListItemAdapter implements ListAdapter {
     private static final int TYPE_INCOME = 0;
     private static final int TYPE_EXPENSE = 1;
     private static final int TYPE_DIVIDER = 2;
-    private static Fragment1 f = null ;
+    private static Fragment1 f;
 
     public ListItemAdapter(Fragment1 fragment1, List<Object> people) {
-        this.f = fragment1;
+        f = fragment1;
         this.personArray = people;
-        this.inflater = (LayoutInflater)fragment1.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater = (LayoutInflater) f1Act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void swapItems(List<Object> items) {
+        this.personArray = items;
     }
 
     @Override

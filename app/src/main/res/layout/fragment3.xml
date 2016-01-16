@@ -195,7 +195,6 @@
             android:layout_width="match_parent"
             android:id="@+id/greenLineText"
             android:textColor="#000000"
-            android:textStyle="bold"
             android:text="LOl"
             android:gravity="center"
             android:textSize="24sp"

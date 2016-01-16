@@ -149,7 +149,6 @@ public class StatisticAdapter implements ListAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        Object ong = getItem(position);
         if (getItem(position) instanceof Expense) {
             return TYPE_STATISTICS_EXP;
         }

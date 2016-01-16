@@ -1,5 +1,6 @@
 package com.example.user.pocketpall.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -36,14 +37,13 @@ public class Fragment3 extends Fragment {
 
     private static View view;
     private static Fragment3 fragment3;
-    private List<ExpandableHeightListView>  listso;
-    private List <LinearLayout> linear;
-    private Spinner spinner;
-
-    public Fragment3() {
-        fragment3 = this;
-
-    }
+    public static Activity f3Act;
+    private static List<ExpandableHeightListView>  listso;
+    private static List <LinearLayout> linear;
+    private  Spinner spinner;
+    static TextView textView;
+    static LinearLayout linearLayout;
+    public static boolean instant = false;
 
     void initListViews()
     {
@@ -71,13 +71,20 @@ public class Fragment3 extends Fragment {
         this.linear.add((LinearLayout)view.findViewById(R.id.WorkLin));
         this.linear.add((LinearLayout)view.findViewById(R.id.EducationLin));
         this.linear.add((LinearLayout) view.findViewById(R.id.SportsLin));
+
+        textView = (TextView)view.findViewById(R.id.greenLineText);
+        linearLayout = (LinearLayout)view.findViewById(R.id.greenLine);
     }
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        fragment3 = this;
+        instant = true;
+        f3Act = fragment3.getActivity();
     }
 
     @Override
@@ -87,6 +94,25 @@ public class Fragment3 extends Fragment {
         init();
         setAdapter();
         initListViews();
+        refresh3Frag();
+        return view;
+    }
+
+    void init()
+    {
+        spinner = (Spinner)view.findViewById(R.id.incExpIncExp);
+    }
+
+    void setAdapter()
+    {
+        String[] items = new String[] {"All", "Income", "Expense"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_dropdown_item, items);
+        spinner.setAdapter(adapter);
+    }
+
+    public static void refresh3Frag()
+    {
         List<ExIn> exIns;
         String cat = "";
         List<Object> come;
@@ -126,27 +152,16 @@ public class Fragment3 extends Fragment {
             }
 
         }
-        TextView textView = (TextView)view.findViewById(R.id.greenLineText);
         textView.setText("Balance: " + sumAll.toString() + " $");
-        LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.greenLine);
+
         if (sumAll < 0)
         {
             linearLayout.setBackgroundColor(Color.parseColor("#E57373"));
         }
-        return view;
-    }
-
-    void init()
-    {
-        spinner = (Spinner)view.findViewById(R.id.incExpIncExp);
-    }
-
-    void setAdapter()
-    {
-        String[] items = new String[] {"All", "Income", "Expense"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, items);
-        spinner.setAdapter(adapter);
+        else
+        {
+            linearLayout.setBackgroundColor(Color.parseColor("#61B329"));
+        }
     }
 
     static class LexicographicComparator implements Comparator<ExIn> {
