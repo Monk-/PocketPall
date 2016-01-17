@@ -64,7 +64,7 @@ public abstract class Template extends SQLiteOpenHelper {
 
     public abstract void delete(SQLiteDatabase db, ExIn come);
 
-    public boolean checkIfexist(ExIn come)
+    public boolean checkIfExist(ExIn come)
     {
         SQLiteDatabase db = connectToDb();
         boolean g = find(db, come);

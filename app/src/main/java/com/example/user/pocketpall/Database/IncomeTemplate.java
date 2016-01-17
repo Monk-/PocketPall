@@ -11,9 +11,6 @@ import com.example.user.pocketpall.Classes.Income;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by User on 10/1/2016.
- */
 public class IncomeTemplate extends Template {
 
     public IncomeTemplate(Context context) {

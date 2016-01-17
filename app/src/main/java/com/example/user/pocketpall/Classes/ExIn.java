@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 public abstract class ExIn {
-    String title;
-    String comment;
-    String date;
-    Double amount;
-    Integer category;
+    private String title;
+    private String comment;
+    private String date;
+    private Double amount;
+    private Integer category;
 
     public ExIn(String title, String comment, Double amount, Integer category, String date) {
         this.title = title;

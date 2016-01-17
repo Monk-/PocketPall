@@ -1,9 +1,6 @@
 package com.example.user.pocketpall.RestoreAndBackup;
 
 import android.os.Environment;
-import android.widget.Toast;
-
-import com.example.user.pocketpall.ContextHelperClass;
 
 import java.io.File;
 import java.io.FileInputStream;

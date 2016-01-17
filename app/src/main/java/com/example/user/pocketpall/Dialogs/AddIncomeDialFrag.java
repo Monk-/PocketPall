@@ -14,17 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.user.pocketpall.Classes.Income;
-import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.Fragments.Fragment2;
 import com.example.user.pocketpall.Fragments.Fragment3;
 import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.user.pocketpall.Classes.Categories;

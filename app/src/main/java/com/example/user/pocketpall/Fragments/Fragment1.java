@@ -26,7 +26,7 @@ import static com.example.user.pocketpall.MainActivity.*;
 public class Fragment1 extends Fragment {
     public static View view;
     public static ExIn exIn;
-    public static  ListView listView;
+    public static ListView listView;
     public static Fragment1 fragment1;
     public static Activity f1Act;
     public static ListItemAdapter listItemAdapter;

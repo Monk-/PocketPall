@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     public static Command choseDialFrag;
     public static Command editDialFrag;
 
+    public static int checkedMenu = R.id.zloty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -233,6 +235,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity2_main, menu);
+        for (int i = 0; i < menu.size(); ++i) {
+            MenuItem mi = menu.getItem(i);
+            // check the Id as you wish
+            if (mi.getItemId() == checkedMenu) {
+                mi.setChecked(true);
+            }
+        }
         return true;
     }
 
@@ -248,6 +257,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.dollar:
                 item.setChecked(true);
                 currency = dollar;
+                checkedMenu = R.id.dollar;
                 Fragment1.refreshList(Fragment1.listView, Fragment1.fragment1);
                 if (Fragment3.instant)
                 Fragment3.refresh3Frag();
@@ -255,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.zloty:
                 item.setChecked(true);
                 currency = zloty;
+                checkedMenu = R.id.dollar;
                 Fragment1.refreshList(Fragment1.listView, Fragment1.fragment1);
                 if (Fragment3.instant)
                     Fragment3.refresh3Frag();
@@ -302,6 +313,20 @@ public class MainActivity extends AppCompatActivity {
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("Menu", checkedMenu);
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        checkedMenu = savedInstanceState.getInt("Menu");
     }
 
 }

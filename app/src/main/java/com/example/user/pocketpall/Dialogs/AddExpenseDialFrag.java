@@ -17,14 +17,11 @@ import android.widget.Spinner;
 
 import com.example.user.pocketpall.Classes.Categories;
 import com.example.user.pocketpall.Classes.Expense;
-import com.example.user.pocketpall.Classes.Income;
-import com.example.user.pocketpall.ContextHelperClass;
 import com.example.user.pocketpall.Fragments.Fragment1;
 import com.example.user.pocketpall.Fragments.Fragment3;
 import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.user.pocketpall.Dialogs.AddIncomeDialFrag.refreshCharts;

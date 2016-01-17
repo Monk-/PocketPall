@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.user.pocketpall.Classes.Categories;
-import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.Fragments.Fragment1;
@@ -76,10 +75,10 @@ public class EditComeDialFrag extends DialogFragment implements Command  {
                             p = false;
                         }
                         if (p) {
-                            if (incDB.checkIfexist(exIn)) {
+                            if (incDB.checkIfExist(exIn)) {
                                 incDB.deleteCome(exIn);
                                 incDB.addToDb(new Income(title, "", amount, category, date));
-                            } else if (expDB.checkIfexist(exIn)) {
+                            } else if (expDB.checkIfExist(exIn)) {
                                 expDB.deleteCome(exIn);
                                 expDB.addToDb(new Expense(title, "", amount, category, date));
                             }

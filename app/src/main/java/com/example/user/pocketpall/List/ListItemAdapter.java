@@ -35,10 +35,6 @@ public class ListItemAdapter implements ListAdapter {
         this.inflater = (LayoutInflater) f1Act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void swapItems(List<Object> items) {
-        this.personArray = items;
-    }
-
     @Override
     public boolean areAllItemsEnabled() {
         return false;
