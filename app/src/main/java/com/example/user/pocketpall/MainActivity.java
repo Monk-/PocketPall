@@ -248,10 +248,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.dollar:
                 item.setChecked(true);
                 currency = dollar;
+                Fragment1.refreshList(Fragment1.listView, Fragment1.fragment1);
+                if (Fragment3.instant)
+                Fragment3.refresh3Frag();
                 return true;
             case R.id.zloty:
                 item.setChecked(true);
                 currency = zloty;
+                Fragment1.refreshList(Fragment1.listView, Fragment1.fragment1);
+                if (Fragment3.instant)
+                    Fragment3.refresh3Frag();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

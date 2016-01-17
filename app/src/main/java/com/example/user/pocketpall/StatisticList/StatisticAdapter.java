@@ -16,6 +16,7 @@ import com.example.user.pocketpall.Classes.ExIn;
 import com.example.user.pocketpall.Classes.Expense;
 import com.example.user.pocketpall.Classes.Income;
 import com.example.user.pocketpall.Fragments.Fragment3;
+import com.example.user.pocketpall.MainActivity;
 import com.example.user.pocketpall.R;
 
 import java.util.List;
@@ -112,7 +113,7 @@ public class StatisticAdapter implements ListAdapter {
                 name3.setText(exIn1.getTitle());
                 TextView amount3 = (TextView)convertView.findViewById(R.id.amount);
                 amount3.setTypeface(faceRegular);
-                amount3.setText(exIn1.getAmount().toString() + " $");
+                amount3.setText(exIn1.getAmount().toString() + MainActivity.currency);
                 amount3.setTextColor(Color.parseColor("#F44336"));
                 break;
             case TYPE_STATISTICS_INC:
@@ -122,7 +123,7 @@ public class StatisticAdapter implements ListAdapter {
                 name1.setText(exIn.getTitle());
                 TextView amount2 = (TextView)convertView.findViewById(R.id.amount);
                 amount2.setTypeface(faceRegular);
-                amount2.setText(exIn.getAmount().toString() + " $");
+                amount2.setText(exIn.getAmount().toString() + MainActivity.currency);
                 amount2.setTextColor(Color.parseColor("#43A047"));
                 break;
             case TYPE_HEADER:
